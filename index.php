@@ -47,7 +47,7 @@
 		echo md5_file('tmp/' . $_FILES['file']['name']) . '<br>';
 		unset($md5encrypt);
 	}else{
-		echo $_FILES['file']['error'];
+		echo 'Error Code: 4';
 	}
 
 ?>
