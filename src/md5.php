@@ -269,7 +269,13 @@
 				}
 				// echo '<br>#Round ' . $i/16 . ' end<br>';
 			}
-			printf('%08x%08x%08x%08x <br>', $this->fix($result[0]), $this->fix($result[1]), $this->fix($result[2]), $this->fix($result[3]));
+			printf(
+				'%08x%08x%08x%08x <br>', 
+				$this->fix($result[0]), 
+				$this->fix($result[1]), 
+				$this->fix($result[2]), 
+				$this->fix($result[3])
+			);
 		}
 	}
 ?>
