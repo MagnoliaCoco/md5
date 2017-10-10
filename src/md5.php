@@ -107,9 +107,11 @@
 			}
 		}
 
+
         // 保存文件
 		public function savetemps($input){
 			echo '<br>md5encrypt->savetemps();<br>';
+			echo $input . '--<br>--';
 			$this->filepath = 'tmp/' . $input;
             echo 'Store in: ' . $this->filepath;
             echo '<br>';
