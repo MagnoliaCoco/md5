@@ -9,11 +9,15 @@
 </head>
 
 <body>
-    <form action="index.php" method="post" enctype="multipart/form-data">
+    <form action="./index.php" method="post" enctype="multipart/form-data">
+	<div>
         <label for="file">Filename:</label>
         <input type="file" name="file" id="file" />
+	</div>
+	<div>
         <label for="text">text:</label>
-        <input type="text" name="text" id="text" />
+		<textarea rows="10" cols="50" name="text"></textarea>
+	</div>
         <input type="submit" name="submit" value="Submit" />
     </form>
 </body>
@@ -25,7 +29,7 @@
 	
 	echo '<br>';
 
-	if($_FILES['file']['name']){
+	if(!empty($_FILES['file']['name'])){
 		if ($_FILES['file']['error']) {
 			echo 'Error Code: ' . $_FILES['file']['error'] . '<br />';
 		} else {
@@ -43,7 +47,6 @@
 		echo '<br>';
 		$md5encrypt = new Md5Encrypt();
 		$md5encrypt->savetemps($_FILES['file']['name']);
-		echo $_FILES['file']['name'];
 		$md5encrypt->AddPaddingBits();
 		$md5encrypt->AddLength();
 		$md5encrypt->Merge();
@@ -65,6 +68,7 @@
 		$md5encrypt->Calc();
 		echo md5_file('tmp/temp.txt') . '<br>';
 		unset($md5encrypt);
+
 	} else {
 		echo 'Error Code: 4';
 	}

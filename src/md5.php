@@ -106,8 +106,6 @@
 				$a = $a - 0x100000000;
 			}
 		}
-
-
         // 保存文件
 		public function savetemps($input){
 			echo '<br>md5encrypt->savetemps();<br>';
@@ -130,7 +128,7 @@
 			foreach ($temp as $key => $value) {
 				$arr[$key-1] = $temp[$key];
 			}
-
+			
 			if(sizeof($arr) % 64 != 56){
 				array_push($arr, 0b10000000);
 				while(sizeof($arr) % 64 != 56){
@@ -138,23 +136,25 @@
 				}
 			}
 			$this->file = $arr;
-			echo 'Before add: ' . sizeof($this->file) . 'Bytes<br>';
+			echo 'After add: ' . sizeof($this->file) . 'Bytes<br>';
 		}
         // 附加长度
 		public function AddLength(){
 			echo '<br>md5encrypt->AddLength();<br>';
 			$len = $this->filelength * 8;
-			$a = ($len >> 56);
-			$b = ($len >> 48) 	- ($a << 8);
-			$c = ($len >> 40) 	- ($a << 16) - ($b << 8);
-			$d = ($len >> 32) 	- ($a << 24) - ($b << 16) - ($c << 8);
-			$e = ($len >> 24) 	- ($a << 32) - ($b << 24) - ($c << 16) - ($d << 8);
-			$f = ($len >> 16) 	- ($a << 40) - ($b << 32) - ($c << 24) - ($d << 16) - ($e << 8);
-			$g = ($len >> 8) 	- ($a << 48) - ($b << 40) - ($c << 32) - ($d << 24) - ($e << 16) - ($f << 8);
-			$h = $len  			- ($a << 56) - ($b << 48) - ($c << 40) - ($d << 32) - ($e << 24) - ($f << 16) - ($g << 8);
-			//array_push($this->file, $a, $b, $c, $d, $e, $f, $g, $h);
-			array_push($this->file, $h, $g, $f, $e, $d, $c ,$b, $a);
-			//array_push($this->file, $e, $f, $g, $h, $a, $b ,$c, $d);
+			if($len == 448){
+				array_push($this->file, 192, 1, 0, 0, 0, 0, 0, 0);
+			} else{
+				$a = ($len >> 56);
+				$b = ($len >> 48) 	- ($a << 8);
+				$c = ($len >> 40) 	- ($a << 16) - ($b << 8);
+				$d = ($len >> 32) 	- ($a << 24) - ($b << 16) - ($c << 8);
+				$e = ($len >> 24) 	- ($a << 32) - ($b << 24) - ($c << 16) - ($d << 8);
+				$f = ($len >> 16) 	- ($a << 40) - ($b << 32) - ($c << 24) - ($d << 16) - ($e << 8);
+				$g = ($len >> 8) 	- ($a << 48) - ($b << 40) - ($c << 32) - ($d << 24) - ($e << 16) - ($f << 8);
+				$h = ($len >> 0)	- ($a << 56) - ($b << 48) - ($c << 40) - ($d << 32) - ($e << 24) - ($f << 16) - ($g << 8);
+				array_push($this->file, $h, $g, $f, $e, $d, $c ,$b, $a);
+			}
 			echo sizeof($this->file) . 'Bytes<br>';
 		}
         // 分组
